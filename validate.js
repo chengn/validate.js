@@ -10,32 +10,34 @@
     /*
      * If you would like an application-wide config, change these defaults.
      * Otherwise, use the setMessage() function to configure form specific messages.
+     * 如果用应用级别的配置，则可以修改此defaults的配置信息
+     * 同时，使用setMessage()方法设置表单个性化的消息
      */
 
     var defaults = {
         messages: {
-            required: '必須填滿 %s 欄位。',
-            matches: '你的 %s 欄位與 %s 欄位不符。',
-            valid_email: '請填上有效的 %s ',
-            valid_emails: '請填上有效的 %s ',
-            min_length: '你的 %s 必須至少填滿 %s 個字元。',
-            max_length: '你的 %s 必須不能超過 %s 個字元。',
-            exact_length: '你的 %s 必須剛好要 %s 個字元。',
-            greater_than: '你的 %s 必須要有個大於 %s 的數字。',
-            less_than: '你的 %s 必須要有個小於 %s 的數字。',
-            alpha: '你的 %s 必須只有英文字母。',
+            required: '%s 不能为空。',
+            matches: ' %s 与 %s 输入不一致。',
+            valid_email: '%s 输入无效',
+            valid_emails: '%s 输入无效',
+            min_length: '%s 至少 %s 个字符。',
+            max_length: '%s 最多 %s 个字符。',
+            exact_length: '%s 只能 %s 个字符。',
+            greater_than: '%s 必须是大于 %s 的数字。',
+            less_than: '%s 必须是小于 %s 的数字。',
+            alpha: '%s 必须是英文字母。',
             alpha_numeric: '你的 %s 必須只有英文字母或數字。',
-            alpha_dash: '你的 %s 只可以是英文字母、數字、底線或破折號。',
-            numeric: '你的 %s 必須只有數字。',
-            integer: '你的 %s 必須是個整數。',
-            decimal: '你的 %s 必須是個小數點。',
-            is_natural: '你的 %s 必須只有正數。',
-            is_natural_no_zero: '你的 %s 必須是個大於零的數字。',
-            valid_ip: '你的 %s 必須是個有效的 IP。',
-            valid_base64: '你的 %s 必須是個 base64 字串。',
-            valid_credit_card: '你的 %s 必須是個有效的信用卡號碼。',
-            is_file_type: '你的 %s 欄位必須要一個 %s 的檔案。',
-            valid_url: '你的 %s 必須是要一個有效的 URL。'
+            alpha_dash: '%s 只能是英文字母、数字、下划线和横线',
+            numeric: '%s 只能是数字。',
+            integer: '%s 只能是整数。',
+            decimal: '%s 必须是小数。',
+            is_natural: '%s 必须是正数。',
+            is_natural_no_zero: '%s 必须是大于零的数字。',
+            valid_ip: '%s 必须是有效的IP。',
+            valid_base64: '%s 必须是 base64 字符。',
+            valid_credit_card: '%s 必须是有效的信用卡号。',
+            is_file_type: '%s 只能是 %s 的文件。',
+            valid_url: '%s 必须是有效的 URL。'
         },
         callback: function(errors) {
 
@@ -44,6 +46,7 @@
 
     /*
      * Define the regular expressions that will be used
+     * 定义校验数据所用到的正则表达式
      */
 
     var ruleRegex = /^(.+?)\[(.+)\]$/,
@@ -64,6 +67,7 @@
     /*
      * The exposed public object to validate a form:
      *
+     * 用于验证form的公共对象,构造参数如下：
      * @param formName - String - The name attribute of the form (i.e. <form name="myForm"></form>)
      * @param fields - Array - [{
      *     name: The name of the element (i.e. <input name="myField" />)
@@ -86,13 +90,14 @@
         for (var i = 0, fieldLength = fields.length; i < fieldLength; i++) {
             var field = fields[i];
 
-            // If passed in incorrectly, we need to skip the field.
+            // If passed in incorrectly, we need to skip the field.验证不通过，则跳过
             if (!field.name || !field.rules) {
                 continue;
             }
 
             /*
              * Build the master fields array that has all the information needed to validate
+             * 构建一个验证需要信息的数组
              */
 
             this.fields[field.name] = {
@@ -108,6 +113,7 @@
 
         /*
          * Attach an event callback for the form submission
+         * 添加一个callback对表单提交操作
          */
 
         var _onsubmit = this.form.onsubmit;
@@ -140,6 +146,9 @@
     /*
      * @public
      * Sets a custom message for one of the rules
+     * 用户自定义提示信息
+     * @param rule - String - 验证规则
+     * @param message - String - 针对本条验证规则的显示信息
      */
 
     FormValidator.prototype.setMessage = function(rule, message) {
@@ -152,6 +161,7 @@
     /*
      * @public
      * Registers a callback for a custom rule (i.e. callback_username_check)
+     * 注册用户自定义callback函数
      */
 
     FormValidator.prototype.registerCallback = function(name, handler) {
@@ -166,6 +176,7 @@
     /*
      * @private
      * Runs the validation when the form is submitted.
+     * 提交表单form时候运行验证
      */
 
     FormValidator.prototype._validateForm = function(evt) {
@@ -210,6 +221,7 @@
     /*
      * @private
      * Looks at the fields value and evaluates it against the given rules
+     * 根据给定的规则进行表单字段的校验
      */
 
     FormValidator.prototype._validateField = function(field) {
@@ -244,6 +256,7 @@
 
             /*
              * If the hook is defined, run it to find any validation errors
+             * 根据定义的hook方法，进行规则校验
              */
 
             if (typeof this._hooks[method] === 'function') {
@@ -294,6 +307,7 @@
     /*
      * @private
      * Object containing all of the validation hooks
+     * 验证所用的钩子方法
      */
 
     FormValidator.prototype._hooks = {
