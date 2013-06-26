@@ -61,7 +61,11 @@ jQuery: https://github.com/magizh/validate_helper
 
 jnhwkim's fork added multi-language support viewable at https://github.com/jnhwkim/validate.js
 
-## Chinese Version
+## Traditional Chinese Version
 
 https://github.com/chilijung/validate.js
+
+## Simple Chinese Version
+
+https://github.com/chengn/validate.js
 
